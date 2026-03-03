@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>SbyS Admin</title>
+</head>
+<body>
+  <h1>Админка SbyS</h1>
+
+  <input type="password" id="pw" placeholder="Пароль">
+  <button onclick="login()">Войти</button>
+
+  <p id="msg"></p>
+
+<script>
+async function login(){
+  const password = document.getElementById('pw').value;
+  const res = await fetch('/api/login', {
+    method:'POST',
+    headers:{'content-type':'application/json'},
+    body:JSON.stringify({password})
+  });
+  const data = await res.json();
+  if(data.ok){
+    document.getElementById('msg').innerText='Успешный вход';
+  } else {
+    document.getElementById('msg').innerText='Ошибка';
+  }
+}
+</script>
+</body>
+</html>
