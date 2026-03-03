@@ -35,7 +35,12 @@ self.addEventListener("activate", (event) => {
 
 self.addEventListener("fetch", (event) => {
   const req = event.request;
+  const url = new URL(req.url);
 
+  // НЕ перехватываем админку и API (иначе /admin будет показывать главный сайт)
+  if (url.pathname.startsWith("/admin") || url.pathname.startsWith("/api")) {
+    return;
+  }
   // Только GET кэшируем
   if (req.method !== "GET") return;
 
